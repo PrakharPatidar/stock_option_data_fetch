@@ -1,11 +1,3 @@
-# stock_option_data_fetch
-
-## Fetch and populate data in excel sheet at regular interval
-
-API URL = "https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY"
-
-Sample data
-```json
 {
   "records": {},
   "filtered": {
@@ -105,5 +97,3 @@ Sample data
     ]
   }
 }
-
-```
