@@ -1,9 +1,10 @@
 import requests
 import datetime
 import pandas as pd
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 import traceback
 import sys
+import os
 
 url = 'https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY'
 headers = {'User-Agent': 'Mozilla/5.0'}
@@ -18,6 +19,7 @@ try:
     while True:
         try:
             api_data = call_api(url, headers = headers)
+            print('Data collected')
         except Exception as e:
             print('Retrying url')
             if api_call_count < retry_url_count:
@@ -50,6 +52,12 @@ try:
         imp_data["OI_Puts"].append(each_data["PE"]["openInterest"])
 
     excel_file_path = 'output.xlsx'
+    if not os.path.exists(excel_file_path):
+        print('Creating empty file')
+        wb = Workbook()
+        wb.save(excel_file_path)
+    
+    print('Populating data')
     sheet_name = datetime.datetime.now().strftime("%d-%m-%Y %H-%M-%S")
     print('sheet name', sheet_name)
 
